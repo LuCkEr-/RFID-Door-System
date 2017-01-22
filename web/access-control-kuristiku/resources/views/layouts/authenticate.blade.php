@@ -8,9 +8,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">@yield('authTitle')</h3>
                 </div>
-                <div class="panel-body">
-                    @yield('authBody')
-                </div>
+                @yield('authBody')
             </div>
         </div>
     </div>
