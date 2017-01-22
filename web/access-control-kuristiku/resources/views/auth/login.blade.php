@@ -4,7 +4,7 @@
 
 @section('authBody')
 <form class="form" role="form" method="POST" action="{{ url('/login') }}">
-{{ csrf_field() }}
+    {{ csrf_field() }}
 
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required autofocus>
