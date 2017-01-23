@@ -14,10 +14,6 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index');
-
-Route::get('/accounts', [
-	'before' => 'auth',
-	function() {
-		return view('pages.accounts');
-	}
-]);
+Route::get('/accounts', 'HomeController@accounts');
+Route::get('/cards', 'HomeController@cards');
+Route::get('/userSettings', 'HomeController@userSettings');

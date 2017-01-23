@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace KAC\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

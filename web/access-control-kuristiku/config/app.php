@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Kuristiku Access Control',
 
     /*
     |--------------------------------------------------------------------------
@@ -172,11 +172,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        KAC\Providers\AppServiceProvider::class,
+        KAC\Providers\AuthServiceProvider::class,
+        // KAC\Providers\BroadcastServiceProvider::class,
+        KAC\Providers\EventServiceProvider::class,
+        KAC\Providers\RouteServiceProvider::class,
 
     ],
 

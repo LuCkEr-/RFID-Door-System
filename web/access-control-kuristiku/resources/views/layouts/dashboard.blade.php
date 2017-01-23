@@ -25,10 +25,14 @@
                     <ul class="dropdown-menu dropdown-user" role="menu">
                     <!-- Authentication Links -->
                         <li>
+                            <a href="{{ url('/userSettings') }}"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
                             <a href="{{ url('/logout') }}"
                                 onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
-                                Logout
+                                <i class="fa fa-sign-out fa-fw"></i> Logout
                             </a>
 
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
