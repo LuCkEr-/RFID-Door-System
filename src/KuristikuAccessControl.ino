@@ -16,11 +16,26 @@
 //==========//
 // INCLUDES //
 //==========//
+  //---------//
+  // ARDUINO //
+  //---------//
+  #include <SPI.h>
+
   //------//
   // RFID //
   //------//
   #include <MFRC522.h>
-  #include <SPI.h>
+
+  //----------//
+  // ETHERNET //
+  //----------//
+  #include <Ethernet.h>
+
+  //-------//
+  // MYSQL //
+  //-------//
+  #include <MySQL_Connection.h>
+  //#include <MySQL_Cursor.h>
 
 //=========//
 // DEFINES //
@@ -29,7 +44,7 @@
   // RFID //
   //------//
   // RST/Reset | PIN
-  #define RST_PIN       3
+  #define RST_PIN       2
 
   // SDA       | PIN
   #define SDA_PIN_1     40
@@ -41,9 +56,9 @@
   //-----//
   // LED //
   //-----//
-  #define LED_RED_PIN 9
-  #define LED_GREEN_PIN 10
-  #define LED_BLUE_PIN 11
+  #define LED_RED_PIN 12
+  #define LED_GREEN_PIN 8
+  #define LED_BLUE_PIN 7
 
 //===========//
 // INSTANCES //
@@ -51,9 +66,18 @@
   //------//
   // RFID //
   //------//
-  // MFRC522 instance.
   MFRC522 mfrc522[READER_TOTAL];
 
+  //----------//
+  // ETHERNET //
+  //----------//
+  EthernetClient ethernetClient;
+
+  //-------//
+  // MYSQL //
+  //-------//
+  MySQL_Connection mysqlClient((Client *)&ethernetClient);
+  //MySQL_Cursor mysqlPos = MySQL_Cursor(&mysqlClient);
 
 //==================//
 // GLOBAL VARIABLES //
@@ -63,10 +87,35 @@
   //------//
   byte sdaPins[] = {SDA_PIN_1, SDA_PIN_2};
 
+  //----------//
+  // ETHERNET //
+  //----------//
+  //byte eth_mac[] = { 0xAD, 0x0L, 0xF0, 0x42, 0x00, 0x69 };
+  // Mac address
+  byte eth_mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+
+  // IP address
+  byte eth_IP[] = {192, 168, 10, 90};
+
+  //-------//
+  // MYSQL //
+  //-------//
+  // Mysql server ip
+  IPAddress mysql_IP(192, 168, 10, 2);
+
+  // Mysql server port
+  int mysql_Port = 3066;
+
+  // Mysql user
+  char mysql_user[] = "kuristiku";
+
+  // Mysql password
+  char mysql_password[] = "eFo04ppjNkG3JJOD";
+
   //----------------//
   // TESTING VALUES //
   //----------------//
-  const int TotalLoadedCards = 10;
+  int TotalLoadedCards = 10;
 
 //=======//
 // SETUP //
@@ -80,15 +129,37 @@ void setup() {
   Serial.println();
   Serial.println("Starting...");
 
-  // Init SPI bus
-  SPI.begin();
-
   // Init LED PINS
+  Serial.print("Assigning LED outputs...");
   pinMode(LED_RED_PIN, OUTPUT);
   pinMode(LED_GREEN_PIN, OUTPUT);
   pinMode(LED_BLUE_PIN, OUTPUT);
+  Serial.println(" [OK]");
+
+  // Init Ethernet
+  Serial.print("Init Ethernet...");
+  Ethernet.begin(eth_mac, eth_IP);
+  Serial.println(" [OK]");
+
+  // Init MYSQL
+  Serial.print("Init Mysql...");
+  if (mysqlClient.connect(mysql_IP, mysql_Port, mysql_user, mysql_password)) {
+    delay(1000);
+    // Connection was made
+    Serial.println(" [OK]");
+  } else {
+    // No connection
+    Serial.println(" [FAIL]");
+    mysqlClient.close();
+  }
+
+  // Init SPI bus
+  Serial.print("Init SPI...");
+  SPI.begin();
+  Serial.println(" [OK]");
 
   // Init RFID-RC522 readers
+  Serial.println("Init RFID readers...");
   for (uint8_t reader = 0; reader < READER_TOTAL; reader++) {
     // buffer
     char buffer[32];
@@ -105,6 +176,7 @@ void setup() {
 
     mfrc522[reader].PCD_DumpVersionToSerial();
   }
+  Serial.println("[DONE]");
 
   Serial.println("Startup finished");
 }
@@ -117,20 +189,16 @@ void loop() {
   for (uint8_t reader = 0; reader < READER_TOTAL; reader++) {
     // Check for new cards
     if (!mfrc522[reader].PICC_IsNewCardPresent()) {
-      // Set led red
-      setLEDColor(255, 0, 0);
       return;
     }
 
     // Select one of the cards
     if (!mfrc522[reader].PICC_ReadCardSerial()) {
-      // Set led red
-      setLEDColor(255, 0, 0);
       return;
     }
 
     // Set led yellow
-    setLEDColor(255, 255, 0);
+    setLEDColor(0, 0, 255);
 
     // Store card UID
     byte uid[mfrc522[reader].uid.size];
@@ -156,19 +224,22 @@ void loop() {
 
     // Checking for matches
     for (int i = 0; i < TotalLoadedCards; i++) {
-      Serial.print("Checking | ");
-      Serial.println(i);
+      //Serial.print("Checking | ");
+      //Serial.println(i);
       if ((memcmp(uid, LoadedCards[i], mfrc522[reader].uid.size)) == 0) {
-        Serial.println("MATCH");
+        //Serial.println("MATCH");
         // Set led green
         setLEDColor(0, 255, 0);
       } else {
-        Serial.println("NO MATCH");
+        //Serial.println("NO MATCH");
       }
     }
 
     // Halt PICC
     mfrc522[reader].PICC_HaltA();
+
+    // Set led red
+    setLEDColor(255, 0, 0);
   }
 }
 
