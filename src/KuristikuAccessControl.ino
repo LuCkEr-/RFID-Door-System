@@ -56,9 +56,9 @@
   //-----//
   // LED //
   //-----//
-  #define LED_RED_PIN 12
-  #define LED_GREEN_PIN 8
   #define LED_BLUE_PIN 7
+  #define LED_YELLOW_PIN 8
+  #define LED_RED_PIN 12
 
 //===========//
 // INSTANCES //
@@ -153,9 +153,9 @@ void setup() {
 //=======//
 void init_LED() {
   Serial.print("Assigning LED outputs...");
-  pinMode(LED_RED_PIN, OUTPUT);
-  pinMode(LED_GREEN_PIN, OUTPUT);
   pinMode(LED_BLUE_PIN, OUTPUT);
+  pinMode(LED_YELLOW_PIN, OUTPUT);
+  pinMode(LED_RED_PIN, OUTPUT);
   Serial.println(" [OK]");
 }
 
@@ -231,8 +231,8 @@ void loop() {
       return;
     }
 
-    // Set led yellow
-    setLEDColor(0, 0, 255);
+    // Verifing
+    LED_Status(2);
 
     // Store card UID
     byte uid[mfrc522[reader].uid.size];
@@ -262,8 +262,8 @@ void loop() {
       //Serial.println(i);
       if ((memcmp(uid, LoadedCards[i], mfrc522[reader].uid.size)) == 0) {
         //Serial.println("MATCH");
-        // Set led green
-        setLEDColor(0, 255, 0);
+        // Access Granted
+        LED_Status(1);
       } else {
         //Serial.println("NO MATCH");
       }
@@ -272,13 +272,33 @@ void loop() {
     // Halt PICC
     mfrc522[reader].PICC_HaltA();
 
-    // Set led red
-    setLEDColor(255, 0, 0);
+    // Access Denied
+    LED_Status(3);
   }
 }
 
-void setLEDColor(int red, int green, int blue) {
-  analogWrite(LED_RED_PIN, red);
-  analogWrite(LED_GREEN_PIN, green);
-  analogWrite(LED_BLUE_PIN, blue);
+void LED_Status(int status) {
+  switch(status) {
+    case 1: {
+      // Access Granted
+      analogWrite(LED_BLUE_PIN, HIGH);
+      analogWrite(LED_YELLOW_PIN, LOW);
+      analogWrite(LED_RED_PIN, LOW);
+      break;
+    }
+    case 2: {
+      // Verifing
+      analogWrite(LED_BLUE_PIN, LOW);
+      analogWrite(LED_YELLOW_PIN, HIGH);
+      analogWrite(LED_RED_PIN, LOW);
+      break;
+    }
+    case 3: {
+      // Access Denied
+      analogWrite(LED_BLUE_PIN, LOW);
+      analogWrite(LED_YELLOW_PIN, LOW);
+      analogWrite(LED_RED_PIN, HIGH);
+      break;
+    }
+  }
 }
