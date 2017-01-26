@@ -29,7 +29,7 @@
   //----------//
   // ETHERNET //
   //----------//
-  #include <Ethernet.h>
+  #include <Ethernet2.h>
 
   //-------//
   // MYSQL //
@@ -90,9 +90,8 @@
   //----------//
   // ETHERNET //
   //----------//
-  //byte eth_mac[] = { 0xAD, 0x0L, 0xF0, 0x42, 0x00, 0x69 };
   // Mac address
-  byte eth_mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+  byte eth_mac[] = { 0xAD, 0x07, 0xF0, 0x42, 0x00, 0x69 };
 
   // IP address
   byte eth_IP[] = {192, 168, 10, 90};
@@ -122,7 +121,7 @@
 //=======//
 void setup() {
   // Init serial communications with the PC
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   // Wait while the serial port is being opened
   while (!Serial);
@@ -130,19 +129,60 @@ void setup() {
   Serial.println("Starting...");
 
   // Init LED PINS
+  init_LED();
+
+  // Init Ethernet
+  init_Ethernet();
+
+  // Init MYSQL
+  init_Mysql();
+
+  // Init SPI bus
+  Serial.print("Init SPI...");
+  SPI.begin();
+  Serial.println(" [OK]");
+
+  // Init Rfid readers
+  init_Rfid();
+
+  Serial.println("Startup finished");
+}
+
+//=======//
+// Inits //
+//=======//
+void init_LED() {
   Serial.print("Assigning LED outputs...");
   pinMode(LED_RED_PIN, OUTPUT);
   pinMode(LED_GREEN_PIN, OUTPUT);
   pinMode(LED_BLUE_PIN, OUTPUT);
   Serial.println(" [OK]");
+}
 
-  // Init Ethernet
+void init_Ethernet() {
   Serial.print("Init Ethernet...");
-  Ethernet.begin(eth_mac, eth_IP);
-  Serial.println(" [OK]");
 
-  // Init MYSQL
+  if (Ethernet.begin(eth_mac) != 0) {
+    // Connection was made
+    Serial.println(" [OK]");
+  } else {
+    // No connection
+    Serial.println(" [FAIL]");
+  }
+
+  // Print IP address
+  Serial.print("IP Address: ");
+  for (byte thisByte = 0; thisByte < 4; thisByte++) {
+    // print the value of each byte of the IP address:
+    Serial.print(Ethernet.localIP()[thisByte], DEC);
+    Serial.print(".");
+  }
+  Serial.println();
+}
+
+void init_Mysql () {
   Serial.print("Init Mysql...");
+
   if (mysqlClient.connect(mysql_IP, mysql_Port, mysql_user, mysql_password)) {
     delay(1000);
     // Connection was made
@@ -152,23 +192,20 @@ void setup() {
     Serial.println(" [FAIL]");
     mysqlClient.close();
   }
+}
 
-  // Init SPI bus
-  Serial.print("Init SPI...");
-  SPI.begin();
-  Serial.println(" [OK]");
-
-  // Init RFID-RC522 readers
-  Serial.println("Init RFID readers...");
+void init_Rfid() {
   for (uint8_t reader = 0; reader < READER_TOTAL; reader++) {
     // buffer
     char buffer[32];
 
     // Init reader
-    sprintf(buffer, "%i | Init reader", reader);
-    Serial.println(buffer);
+    sprintf(buffer, "%i | Init reader...", reader);
+    Serial.print(buffer);
 
     mfrc522[reader].PCD_Init(sdaPins[reader], RST_PIN);
+
+    Serial.println(" [OK]");
 
     // Display reader info
     sprintf(buffer, "%i | ", reader);
@@ -176,9 +213,6 @@ void setup() {
 
     mfrc522[reader].PCD_DumpVersionToSerial();
   }
-  Serial.println("[DONE]");
-
-  Serial.println("Startup finished");
 }
 
 //======//
