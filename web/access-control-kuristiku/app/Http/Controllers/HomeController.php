@@ -31,14 +31,14 @@ class HomeController extends Controller
 
     public function accounts()
     {
-        $users = KAC\User::all();
-        return view('pages.accounts', ['users' => $users]);
+        //$users = KAC\User::all();
+        //return view('pages.accounts', ['users' => $users]);
     }
 
     public function cards()
     {
-        $cards = KAC\rfidCards::all();
-        return view('pages.cards', ['cards' => $cards]);
+        //$cards = KAC\rfidCards::all();
+        //return view('pages.cards', ['cards' => $cards]);
     }
 
     public function userSettings()
