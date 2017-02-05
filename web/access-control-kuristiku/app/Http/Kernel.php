@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \KAC\Http\Middleware\InitSetup::class,
+        \KAC\Http\Middleware\AdminAccountCheck::class,
     ];
 
     /**
@@ -53,5 +53,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \KAC\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admincheck' => \KAC\Http\Middleware\AdminAccountCheck::class,
     ];
 }

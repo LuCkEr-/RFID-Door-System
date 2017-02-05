@@ -5,7 +5,7 @@ namespace KAC\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\DB;
 
-class InitSetup
+class AdminAccountCheck
 {
     /**
      * Handle an incoming request.

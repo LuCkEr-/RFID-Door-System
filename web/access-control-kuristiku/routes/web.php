@@ -14,7 +14,7 @@
 Auth::routes();
 
 // First time setup
-Route::get('/setup', 'InitSetupController@index');
+Route::get('/setup', ['middleware' => 'admincheck', 'uses' => 'RegisterAdminController@index']);
 
 // Logged in user
 Route::get('/', 'DashboardController@index');
