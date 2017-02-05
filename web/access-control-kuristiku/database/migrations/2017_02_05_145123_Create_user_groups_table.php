@@ -17,6 +17,8 @@ class CreateUserGroupsTable extends Migration
             $table -> increments('userID');
             $table -> integer('groupID');
 
+            $table -> primary(['userID', 'groupID']);
+
             $table -> timestamps();
         });
     }

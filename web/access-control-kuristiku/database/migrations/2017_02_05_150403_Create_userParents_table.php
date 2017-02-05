@@ -17,6 +17,8 @@ class CreateUserParentsTable extends Migration
             $table -> increments('userID');
             $table -> integer('parentID');
 
+            $table -> primary(['userID', 'parentID']);
+
             $table -> timestamps();
         });
     }
