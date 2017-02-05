@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RfidCards extends Migration
+class CreateUserParentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class RfidCards extends Migration
      */
     public function up()
     {
-        Schema::create('rfid_cards', function (Blueprint $table) {
-            $table -> increments('id');
-            $table -> string('cardUID');
-            $table -> string('isicID');
+        Schema::create('userParents', function (Blueprint $table) {
+            $table -> increments('userID');
+            $table -> integer('parentID');
+
             $table -> timestamps();
         });
     }
@@ -28,6 +28,6 @@ class RfidCards extends Migration
      */
     public function down()
     {
-        Schema::drop('rfid_cards');
+        Schema::drop('userParents');
     }
 }
