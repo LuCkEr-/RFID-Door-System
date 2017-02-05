@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserGroupsTable extends Migration
+class CreateAccountParentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateUserGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('userGroups', function (Blueprint $table) {
+        Schema::create('accountParents', function (Blueprint $table) {
             $table -> increments('userID');
-            $table -> integer('groupID');
+            $table -> integer('parentID');
 
-            $table -> primary(['userID', 'groupID']);
+            $table -> primary(['userID', 'parentID']);
 
             $table -> timestamps();
         });
@@ -30,6 +30,6 @@ class CreateUserGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('userGroups');
+        Schema::drop('userParents');
     }
 }
