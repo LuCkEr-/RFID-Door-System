@@ -13,7 +13,14 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
-Route::get('/accounts', 'HomeController@accounts');
-Route::get('/cards', 'HomeController@cards');
-Route::get('/userSettings', 'HomeController@userSettings');
+// First time setup
+Route::get('/setup', 'InitSetupController@index');
+
+// Logged in user
+Route::get('/', 'DashboardController@index');
+
+
+
+//Route::get('/accounts', 'HomeController@accounts');
+//Route::get('/cards', 'HomeController@cards');
+//Route::get('/userSettings', 'HomeController@userSettings');

@@ -13,17 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('pages.dashboard');
+        //$this->middleware('auth');
     }
 
     public function accounts()
@@ -40,11 +30,11 @@ class HomeController extends Controller
 
     public function userSettings()
     {
-        $user = DB::table('users')
-        -> select('name', 'email')
-        -> where('email', Auth::user() -> email)
-        -> limit(1)
-        -> get();
-        return view('pages.userSettings', ['user' => $user]);
+        //$user = DB::table('users')
+        //-> select('name', 'email')
+        //-> where('email', Auth::user() -> email)
+        //-> limit(1)
+        //-> get();
+        //return view('pages.userSettings', ['user' => $user]);
     }
 }

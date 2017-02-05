@@ -1,6 +1,8 @@
 @extends('layouts.authenticate')
 
-@section('authTitle', 'Register')
+@section('authTitle')
+    {{ $title }}
+@endsection
 
 @section('authBody')
 <div class="panel-body" style="padding-bottom: 0px;">
@@ -8,7 +10,7 @@
         {{ csrf_field() }}
 
         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-            <input id="name" type="text" class="form-control" name="name" placeholder="Name" value="{{ old('name') }}" required autofocus>
+            <input id="name" type="text" class="form-control" name="name" placeholder="Kasutaja nimi" value="{{ old('name') }}" required autofocus>
 
             @if ($errors->has('name'))
                 <span class="help-block">
@@ -28,7 +30,7 @@
         </div>
 
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+            <input id="password" type="password" class="form-control" name="password" placeholder="Parool" required>
 
             @if ($errors->has('password'))
                 <span class="help-block">
@@ -38,12 +40,12 @@
         </div>
 
         <div class="form-group">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
+            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Parool uuesti" required>
         </div>
 
         <div class="form-group">
             <button type="submit" class="btn btn-lg btn-primary btn-block">
-                Register
+                Registreeri
             </button>
         </div>
     </form>
