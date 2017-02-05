@@ -1,8 +1,8 @@
-WEB
+#**Veebileht**
 Installimis juhend
 
-Probleemid:
-
+**Probleemid**
+-[] Mitu RFID lugejat?
 Multiplexer??? RFID lugeja probleem - Tuleb uurida lahendusi ilma Multiplexeritta
 
 
