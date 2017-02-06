@@ -37,6 +37,8 @@ class CreateAccountsTable extends Migration
             $table -> string('pan'); // ???
             $table -> string('businessName'); // ???
 
+            $table -> primary('userID');
+
             $table -> timestamps();
         });
     }

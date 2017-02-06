@@ -20,6 +20,8 @@ class CreateGroupsTable extends Migration
 
             // Need to add stuff here
 
+            $table -> primary('groupID');
+
             $table -> timestamps();
         });
     }

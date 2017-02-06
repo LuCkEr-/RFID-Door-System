@@ -20,6 +20,8 @@ class CreateParentsTable extends Migration
             $table -> string('parentFirstName');
             $table -> string('parentLastName');
 
+            $table -> primary('parentID');
+
             $table -> timestamps();
         });
     }

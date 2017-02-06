@@ -20,6 +20,8 @@ class CreateCardsTable extends Migration
             $table -> string('cardRFID');
             $table -> string('visualID');
 
+            $table -> primary('cardID');
+
             $table -> timestamps();
         });
     }
