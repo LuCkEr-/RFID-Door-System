@@ -13,7 +13,7 @@ class CreateParentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('parents', function (Blueprint $table) {
+        Schema::create('elders', function (Blueprint $table) {
             $table -> increments('parentID');
 
             $table -> string('parentPersonalCode');
@@ -33,6 +33,6 @@ class CreateParentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('parents');
+        Schema::drop('elders');
     }
 }
