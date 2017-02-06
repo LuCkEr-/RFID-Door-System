@@ -13,4 +13,8 @@
 
 Auth::routes();
 
+// Dashboard
 Route::get('/', 'DashboardController@Dashboard');
+
+// Setup
+Route::get('/setup', 'SetupController@Setup');
