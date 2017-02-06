@@ -14,11 +14,12 @@ class CreateCardsTable extends Migration
     public function up()
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table -> increments('userID');
+            $table -> increments('cardID');
+            $table -> integer('userID');
 
-            $table -> string('cardID');
+            $table -> string('cardRFID');
             $table -> string('visualID');
-            
+
             $table -> timestamps();
         });
     }
