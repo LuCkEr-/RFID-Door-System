@@ -18,8 +18,6 @@ class CreateAccountGroupsTable extends Migration
             $table -> integer('groupID');
 
             $table -> primary(['userID', 'groupID']);
-
-            $table -> timestamps();
         });
     }
 

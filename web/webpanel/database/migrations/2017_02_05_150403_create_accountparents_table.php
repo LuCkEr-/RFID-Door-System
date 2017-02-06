@@ -18,8 +18,6 @@ class CreateAccountParentsTable extends Migration
             $table -> integer('parentID');
 
             $table -> primary(['userID', 'parentID']);
-
-            $table -> timestamps();
         });
     }
 
