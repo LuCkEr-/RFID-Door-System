@@ -14,7 +14,7 @@ class CreateAccountParentsTable extends Migration
     public function up()
     {
         Schema::create('accountParents', function (Blueprint $table) {
-            $table -> increments('userID');
+            $table -> integer('userID');
             $table -> integer('parentID');
 
             $table -> primary(['userID', 'parentID']);
@@ -30,6 +30,6 @@ class CreateAccountParentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('userParents');
+        Schema::drop('accountParents');
     }
 }
