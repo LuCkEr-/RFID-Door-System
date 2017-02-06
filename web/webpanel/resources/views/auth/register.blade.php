@@ -10,7 +10,7 @@
         {{ csrf_field() }}
 
         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-            <input id="name" type="text" class="form-control" name="name" placeholder="Kasutaja nimi" value="{{ old('name') }}" required autofocus>
+            <input id="name" type="text" class="form-control" name="name" placeholder="Ees- ja perekonnanimi" value="{{ old('name') }}" required autofocus>
 
             @if ($errors->has('name'))
                 <span class="help-block">
