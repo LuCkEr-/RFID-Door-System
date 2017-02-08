@@ -14,7 +14,13 @@
 Auth::routes();
 
 // Dashboard
-Route::get('/', 'DashboardController@Dashboard');
+Route::get('/', 'DashboardController@index');
+
+// Accounts
+Route::get('/accounts', 'AccountsController@index');
+Route::get('/accounts/create', 'AccountsController@create');
+Route::get('/accounts/import', 'AccountsController@import');
+Route::get('/accounts/edit/{id}', 'AccountsController@edit');
 
 // Setup
 Route::get('/setup', 'SetupController@Setup') -> middleware('guest');

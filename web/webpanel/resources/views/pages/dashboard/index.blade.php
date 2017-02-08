@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('contentTitle', 'Dashboard')
+@section('contentTitle', 'Koondpaneel')
 
 @section('content')
 
