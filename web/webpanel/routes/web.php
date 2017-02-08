@@ -19,6 +19,7 @@ Route::get('/', 'DashboardController@index');
 // Accounts
 Route::get('/accounts', 'AccountsController@index');
 Route::get('/accounts/create', 'AccountsController@create');
+Route::post('/accounts/store', 'AccountsController@store');
 Route::get('/accounts/import', 'AccountsController@import');
 Route::get('/accounts/edit/{id}', 'AccountsController@edit');
 
