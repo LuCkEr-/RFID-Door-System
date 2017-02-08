@@ -17,4 +17,4 @@ Auth::routes();
 Route::get('/', 'DashboardController@Dashboard');
 
 // Setup
-Route::get('/setup', 'SetupController@Setup');
+Route::get('/setup', 'SetupController@Setup') -> middleware('guest');

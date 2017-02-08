@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SetupController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('setup');
-    }
-
     public function Setup()
     {
-        return view('auth.register', ['title' => 'Palun registreeri administraator kasutaja']);
+        $users = DB::table('users')
+        -> select('name', 'email')
+        -> get();
+
+        if (!count($users))
+        {
+            return view('auth.register', ['title' => 'Palun registreeri administraator kasutaja']);
+        } else {
+            return redirect('/login');
+        }
     }
 }
