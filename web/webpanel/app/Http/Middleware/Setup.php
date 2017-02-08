@@ -20,9 +20,15 @@ class Setup
         -> select('name', 'email')
         -> get();
 
-        if (!count($users) && !($request -> is('setup') || (($request -> is('register') && ($request -> isMethod('post'))))))
+        // Redirect to setup ONLY IF
+        // NO login user in db
+        // AND we are NOT on 'setup'
+        // AND we are NOT requesting 'register' ON 'post'
+        if (!count($users) && !($request -> is('setup')) && !($request -> is('register')) && !($request -> isMethod('post')))
         {
             return redirect('/setup');
+        } else {
+            //return redirect('/');
         }
 
         return $next($request);
