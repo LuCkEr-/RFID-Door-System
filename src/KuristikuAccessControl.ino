@@ -44,12 +44,12 @@ SPI SCK     SCK          52
 // RFID //
 //------//
 // RST/Reset | PIN
-#define RST_PIN_1       2
-#define RST_PIN_2       2
+#define RST_PIN_1       5
+#define RST_PIN_2       6
 
 // SDA       | PIN
 #define SDA_PIN_1       40
-#define SDA_PIN_2       30
+#define SDA_PIN_2       53
 
 // Number of readers
 #define READER_TOTAL    2
@@ -241,12 +241,14 @@ void loop() {
             Serial.println(reader);
             lastint = reader;
         }
-
+        
         // Check for new cards
         if (!mfrc522[reader].PICC_IsNewCardPresent()) {
+            Serial.println("new card is not present!");
             return;
         }
 
+        /*
         // Select one of the cards
         if (!mfrc522[reader].PICC_ReadCardSerial()) {
             return;
@@ -297,7 +299,7 @@ void loop() {
         mfrc522[reader].PCD_StopCrypto1();
 
         // Access Denied
-        LED_Status(3);
+        LED_Status(3); */
     }
 }
 
