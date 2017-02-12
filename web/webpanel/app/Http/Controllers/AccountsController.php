@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Account;
 
 class AccountsController extends Controller
 {
@@ -39,7 +40,24 @@ class AccountsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Account::create(request([
+            'firstName',
+            'lastName',
+            'extraName',
+            'email',
+            'personalCode',
+            'homeAddress',
+            'workAddress',
+            'homePhone',
+            'mobilePhone',
+            'jobTitle',
+            'employer',
+            'comments',
+            'pan',
+            'businessName'
+        ]));
+
+        return redirect('/');
     }
 
     /**

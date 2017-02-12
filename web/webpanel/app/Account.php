@@ -8,6 +8,22 @@ class Account extends Model
 {
     protected $table = 'accounts';
     protected $primaryKey = 'userID';
+    protected $fillabel =[
+        'firstName',
+        'lastName',
+        'extraName',
+        'email',
+        'personalCode',
+        'homeAddress',
+        'workAddress',
+        'homePhone',
+        'mobilePhone',
+        'jobTitle',
+        'employer',
+        'comments',
+        'pan',
+        'businessName'
+    ];
 
 
     // Gets users cards
