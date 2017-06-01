@@ -1,0 +1,13 @@
+image: python:2.7
+
+cache:
+  paths:
+  - .platformio/
+
+Build:
+  script:
+   - pip install -U platformio
+   - platformio lib -g install 261 64 63 868
+   - platformio ci --board=leonardoeth --lib="." src/controller.cpp
+  tags:
+   - Ubuntu
